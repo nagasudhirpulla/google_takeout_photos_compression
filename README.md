@@ -18,6 +18,9 @@
 * Audio codec will be aac, default quality will be high
 * Video codec will be H264
 
+## TODOs
+* Figure out how to persist the location and time information for video files
+
 ## References
 * Video compression with moviepy- https://github.com/Sapansathawara/video_compressor_script_in_python/blob/main/video_compressor.py
 * ffmeg, Handbrake, Shutter encoder tool for video compression
