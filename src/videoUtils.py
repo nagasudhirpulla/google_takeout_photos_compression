@@ -20,19 +20,23 @@ def compressVideo(inputPath, outputPath, maxWidth=1280, audioQuality="high"):
             # resize video
             print(f"video resize factor = {resizeFactor}")
             videoClip = videoClip.resize(resizeFactor)
-        else:
-            videoClip.close()
-            return
+
+        # todo check if file size is ok as per new bit rate and cancel processing if video size in limits
 
         # Preserve the original video rotation
         rotation = videoClip.rotation
         # Rotate the video without cropping or stretching
         videoClip = videoClip.rotate(rotation)
+        fps = 30
+        bitsPerPixel = 0.05
+
+        newBitrateKbps = originalSize[0]*originalSize[1]*resizeFactor*resizeFactor*fps*bitsPerPixel*0.001
 
         # Write the compressed video to the output path
         print(f"saving {outputPath}")
         videoClip.write_videofile(
-            outputPath, codec="libx264", audio_codec=audioCodec)
+            outputPath, codec="libx264", audio_codec=audioCodec,
+            bitrate=f"{newBitrateKbps}k", fps=fps)
         videoClip.close()
     except Exception as e:
         videoClip.close()

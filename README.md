@@ -20,6 +20,8 @@
 
 ## TODOs
 * Figure out how to persist the location and time information for video files
+* Take metadata from json files of the google photos zip
+* Add Media Created metadata for files from json
 
 ## References
 * Video compression with moviepy- https://github.com/Sapansathawara/video_compressor_script_in_python/blob/main/video_compressor.py
