@@ -1,7 +1,7 @@
 from moviepy.editor import VideoFileClip
 
 
-def compressVideo(inputPath, outputPath, maxWidth=1280, audioQuality="high"):
+def compressVideo(inputPath, outputPath, maxWidth=1280, audioQuality="high", mediaCreationTimeStr=""):
     # Load video clip
     videoClip = VideoFileClip(inputPath)
     try:
@@ -30,13 +30,20 @@ def compressVideo(inputPath, outputPath, maxWidth=1280, audioQuality="high"):
         fps = 30
         bitsPerPixel = 0.05
 
-        newBitrateKbps = originalSize[0]*originalSize[1]*resizeFactor*resizeFactor*fps*bitsPerPixel*0.001
+        newBitrateKbps = originalSize[0]*originalSize[1] * \
+            resizeFactor*resizeFactor*fps*bitsPerPixel*0.001
+
+        ffmpegParams = None
+        if not mediaCreationTimeStr == "":
+            ffmpegParams = ['-metadata',
+                            'creation_time=' + mediaCreationTimeStr]
 
         # Write the compressed video to the output path
         print(f"saving {outputPath}")
         videoClip.write_videofile(
             outputPath, codec="libx264", audio_codec=audioCodec,
-            bitrate=f"{newBitrateKbps}k", fps=fps)
+            bitrate=f"{newBitrateKbps}k", fps=fps,
+            ffmpeg_params=ffmpegParams)
         videoClip.close()
     except Exception as e:
         videoClip.close()

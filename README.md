@@ -22,8 +22,12 @@
 * Figure out how to persist the location and time information for video files
 * Take metadata from json files of the google photos zip
 * Add Media Created metadata for files from json
+* Add altitude data to exif json in get_gps_exif function
 
 ## References
+* Add GPS to image - https://stackoverflow.com/a/77056370/2746323
+* Setting exif data to image with piexif - https://piexif.readthedocs.io/en/latest/functions.html#dump
+* exif tags from specification - https://exiftool.org/TagNames/EXIF.html
 * Video compression with moviepy- https://github.com/Sapansathawara/video_compressor_script_in_python/blob/main/video_compressor.py
 * ffmeg, Handbrake, Shutter encoder tool for video compression
 * photos compression like whatsapp with python pillow - https://nagasudhir.blogspot.com/2024/09/compress-photos-in-bulk-with-pillow.html

@@ -1,7 +1,7 @@
 from PIL import Image
-from src.metadataUtils import copyImageMetadata
+import piexif
 
-def compressImage(srcImgPath, destImgPath, maxWidth, quality=100):
+def compressImage(srcImgPath, destImgPath, maxWidth, quality=100, exifDict={}):
     # open source image
     image = Image.open(srcImgPath)
 
@@ -16,7 +16,7 @@ def compressImage(srcImgPath, destImgPath, maxWidth, quality=100):
     # Save the new image
     outFname = destImgPath
     print(f"saving {outFname}")
-    image.save(outFname, 'JPEG', quality=quality)
+    image.save(outFname, 'JPEG', quality=quality, exif=piexif.dump(exifDict))
 
     # copy metadata from source image to destination image
-    copyImageMetadata(srcImgPath, destImgPath)
+    # copyImageMetadata(srcImgPath, destImgPath)
