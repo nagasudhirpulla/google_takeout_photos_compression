@@ -1,14 +1,15 @@
-from zipfile import ZipFile
-from src.metadataUtils import getExifMetaData, getMediaCreationTimeStr
-from src.imageUtils import compressImage
-from src.videoUtils import compressVideo
 import glob
-import pathlib
-import os
-import shutil
 import json
+import os
+import pathlib
+import shutil
+from zipfile import ZipFile
 
-inpFolder = r'..\input'
+from src.imageUtils import compressImage
+from src.metadataUtils import getExifMetaData, getMediaCreationTimeStr
+from src.videoUtils import compressVideo
+
+inpFolder = r"..\input"
 outFolder = r"..\output"
 maxImgWidthPx = 1280
 qualityPerc = 100
@@ -19,9 +20,9 @@ numFiles = 0
 numImgs = 0
 numVids = 0
 # get all zip file paths
-for zipIter, zipFileName in enumerate(glob.glob(inpFolder+r"\\*.zip")):
+for zipIter, zipFileName in enumerate(glob.glob(inpFolder + r"\\*.zip")):
     print(f"{zipIter} : processing zip {zipFileName}")
-    with ZipFile(zipFileName, 'r') as zip:
+    with ZipFile(zipFileName, "r") as zip:
         zipFilePaths = zip.namelist()
         for fPath in zipFilePaths:
             extractedFPath = ""
@@ -37,7 +38,7 @@ for zipIter, zipFileName in enumerate(glob.glob(inpFolder+r"\\*.zip")):
                 outFileName = pathlib.Path(extractedFPath).name
                 outFilePath = os.path.join(outFolder, outFileName)
 
-                metadataFilePath = fPath+".supplemental-metadata.json"
+                metadataFilePath = fPath + ".supplemental-metadata.json"
 
                 # search metadata file
                 if metadataFilePath in zipFilePaths:
@@ -48,12 +49,19 @@ for zipIter, zipFileName in enumerate(glob.glob(inpFolder+r"\\*.zip")):
 
             if extractedFPath.endswith(".jpg"):
                 numImgs += 1
-                compressImage(extractedFPath, outFilePath,
-                              maxImgWidthPx, qualityPerc, exifDict)
+                compressImage(
+                    extractedFPath, outFilePath, maxImgWidthPx, qualityPerc, exifDict
+                )
             elif extractedFPath.endswith(".mp4"):
                 numVids += 1
-                compressVideo(extractedFPath, outFilePath,
-                              maxImgWidthPx, audioQuality, getMediaCreationTimeStr(metadataJson))
+                compressVideo(
+                    extractedFPath,
+                    outFilePath,
+                    maxImgWidthPx,
+                    audioQuality,
+                    getMediaCreationTimeStr(metadataJson),
+                )
 
 print(
-    f"completed processing {numImgs} images, {numVids} videos, totalling {numFiles} files")
+    f"completed processing {numImgs} images, {numVids} videos, totalling {numFiles} files"
+)

@@ -23,6 +23,7 @@
 * Take metadata from json files of the google photos zip
 * Add Media Created metadata for files from json
 * Add altitude data to exif json in get_gps_exif function
+* Directly copy video if the estimated conversion size is almost the same as original
 
 ## References
 * Add GPS to image - https://stackoverflow.com/a/77056370/2746323
